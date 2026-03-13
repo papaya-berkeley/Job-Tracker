@@ -4,7 +4,7 @@ describe("prospect creation validation", () => {
   test("rejects a blank company name", () => {
     const result = validateProspect({
       companyName: "",
-      roleTitle: "Software Engineer",
+      roleTitle: "Marketing officer",
     });
 
     expect(result.valid).toBe(false);
