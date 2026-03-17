@@ -36,6 +36,7 @@ export function AddProspectForm({ onSuccess }: { onSuccess?: () => void }) {
       jobUrl: "",
       status: "Bookmarked",
       interestLevel: "Medium",
+      targetSalary: "",
       notes: "",
     },
   });
@@ -86,24 +87,45 @@ export function AddProspectForm({ onSuccess }: { onSuccess?: () => void }) {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="jobUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Job URL (optional)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://..."
-                  {...field}
-                  value={field.value ?? ""}
-                  data-testid="input-job-url"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="jobUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Job URL (optional)</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="https://..."
+                    {...field}
+                    value={field.value ?? ""}
+                    data-testid="input-job-url"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="targetSalary"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Target Salary (optional)</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="e.g. $120k"
+                    {...field}
+                    value={field.value ?? ""}
+                    data-testid="input-target-salary"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <div className="grid grid-cols-2 gap-4">
           <FormField
