@@ -41,6 +41,7 @@ export function EditProspectForm({ prospect, onSuccess }: EditProspectFormProps)
       jobUrl: prospect.jobUrl ?? "",
       status: prospect.status as InsertProspect["status"],
       interestLevel: prospect.interestLevel as InsertProspect["interestLevel"],
+      targetSalary: prospect.targetSalary ?? "",
       notes: prospect.notes ?? "",
     },
   });
@@ -90,24 +91,45 @@ export function EditProspectForm({ prospect, onSuccess }: EditProspectFormProps)
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="jobUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Job URL (optional)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://..."
-                  {...field}
-                  value={field.value ?? ""}
-                  data-testid="input-edit-job-url"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="jobUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Job URL (optional)</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="https://..."
+                    {...field}
+                    value={field.value ?? ""}
+                    data-testid="input-edit-job-url"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="targetSalary"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Target Salary (optional)</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="e.g. $120k"
+                    {...field}
+                    value={field.value ?? ""}
+                    data-testid="input-edit-target-salary"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <div className="grid grid-cols-2 gap-4">
           <FormField
