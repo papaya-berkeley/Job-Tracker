@@ -42,6 +42,7 @@ export function EditProspectForm({ prospect, onSuccess }: EditProspectFormProps)
       status: prospect.status as InsertProspect["status"],
       interestLevel: prospect.interestLevel as InsertProspect["interestLevel"],
       targetSalary: prospect.targetSalary ?? "",
+      applicationDeadline: prospect.applicationDeadline ?? "",
       notes: prospect.notes ?? "",
     },
   });
@@ -182,6 +183,25 @@ export function EditProspectForm({ prospect, onSuccess }: EditProspectFormProps)
             )}
           />
         </div>
+
+        <FormField
+          control={form.control}
+          name="applicationDeadline"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Application Deadline (optional)</FormLabel>
+              <FormControl>
+                <Input
+                  type="date"
+                  {...field}
+                  value={field.value ?? ""}
+                  data-testid="input-edit-application-deadline"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}

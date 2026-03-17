@@ -30,11 +30,12 @@ client/src/
 
 ## Database
 
-Single `prospects` table: id, company_name, role_title, job_url, status, interest_level, target_salary, notes, created_at.
+Single `prospects` table: id, company_name, role_title, job_url, status, interest_level, target_salary, application_deadline, notes, created_at.
 
 - **Statuses**: Bookmarked, Applied, Phone Screen, Interviewing, Offer, Rejected, Withdrawn
 - **Interest levels**: High, Medium, Low
 - **Target salary**: optional free-text field (max 100 chars); stored as `text` to support any format (e.g. "$120k", "£80k–£90k")
+- **Application deadline**: optional `date` column (YYYY-MM-DD); shown on cards with a calendar icon; turns red with "Overdue" label when the date has passed
 
 ## API
 

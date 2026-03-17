@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Prospect } from "@shared/schema";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Trash2, Pencil, Flame, ThumbsUp, Minus, DollarSign } from "lucide-react";
+import { ExternalLink, Trash2, Pencil, Flame, ThumbsUp, Minus, DollarSign, Calendar, AlertCircle } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -39,6 +39,46 @@ function InterestIndicator({ level }: { level: string }) {
     default:
       return null;
   }
+}
+
+function formatDeadline(dateStr: string): string {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function isOverdue(dateStr: string): boolean {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  const deadline = new Date(year, month - 1, day);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return deadline < today;
+}
+
+function DeadlineIndicator({ deadline, prospectId }: { deadline: string; prospectId: number }) {
+  const overdue = isOverdue(deadline);
+  return (
+    <span
+      className={[
+        "inline-flex items-center gap-1 text-xs font-medium",
+        overdue
+          ? "text-red-600 dark:text-red-400"
+          : "text-muted-foreground",
+      ].join(" ")}
+      data-testid={`text-deadline-${prospectId}`}
+    >
+      {overdue ? (
+        <AlertCircle className="w-3 h-3" />
+      ) : (
+        <Calendar className="w-3 h-3" />
+      )}
+      {overdue ? "Overdue · " : "Due "}
+      {formatDeadline(deadline)}
+    </span>
+  );
 }
 
 export function ProspectCard({ prospect }: { prospect: Prospect }) {
@@ -115,6 +155,10 @@ export function ProspectCard({ prospect }: { prospect: Prospect }) {
             </span>
           )}
         </div>
+
+        {prospect.applicationDeadline && (
+          <DeadlineIndicator deadline={prospect.applicationDeadline} prospectId={prospect.id} />
+        )}
 
         {prospect.jobUrl && (
           <a
