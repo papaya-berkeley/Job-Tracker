@@ -21,4 +21,5 @@ describe("prospect creation validation", () => {
     expect(result.errors).toContain("Role title is required");
   });
 });
-//Setup check completed by Aya.
+--
+Setup check completed by Aya.
