@@ -47,9 +47,25 @@ export function validateProspect(data: Record<string, unknown>): { valid: boolea
     }
   }
 
+  if (data.applicationDeadline !== undefined && data.applicationDeadline !== null) {
+    if (typeof data.applicationDeadline !== "string") {
+      errors.push("Application deadline must be a string");
+    } else if (!/^\d{4}-\d{2}-\d{2}$/.test(data.applicationDeadline)) {
+      errors.push("Deadline must be a valid date (YYYY-MM-DD)");
+    }
+  }
+
   return { valid: errors.length === 0, errors };
 }
 
 export function isTerminalStatus(status: string): boolean {
   return status === "Rejected" || status === "Withdrawn" || status === "Offer";
+}
+
+export function isDeadlineOverdue(deadlineStr: string): boolean {
+  const [year, month, day] = deadlineStr.split("-").map(Number);
+  const deadline = new Date(year, month - 1, day);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return deadline < today;
 }
