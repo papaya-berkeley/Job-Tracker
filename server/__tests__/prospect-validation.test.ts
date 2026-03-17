@@ -22,4 +22,3 @@ describe("prospect creation validation", () => {
   });
 });
 --
-Setup check completed by Aya.
